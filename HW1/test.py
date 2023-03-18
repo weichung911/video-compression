@@ -1,6 +1,7 @@
 import cv2 as cv
 import numpy as np
 from scipy import signal
+import io
 
 # 定义RGB到YCbCr的转换矩阵
 RGB2YCbCr = np.array([[0.299, 0.587, 0.114],
@@ -26,9 +27,20 @@ def rgb2ycbcr(img):
     # ycbcr420[:, :, 2] = Cr
 
     return ycbcr420
-foreman_qcif_0_rgb = cv.imread('foreman_qcif_0_rgb.bmp')
-ycbcr420 = rgb2ycbcr(foreman_qcif_0_rgb)
+# foreman_qcif_0_rgb = cv.imread('foreman_qcif_0_rgb.bmp')
+# ycbcr420 = rgb2ycbcr(foreman_qcif_0_rgb)
 
-cv.imshow('RGB',foreman_qcif_0_rgb)
-cv.imshow('resize',ycbcr420)
-cv.waitKey(0)
+# cv.imshow('RGB',foreman_qcif_0_rgb)
+# cv.imshow('resize',ycbcr420)
+# cv.waitKey(0)
+
+# for i in range(0,10,2):
+#     print(i)
+
+a = np.array([[1,2,3],
+              [1,1,1],
+              [1,1,1]])
+b = np.array([1,2,3])
+
+c = b.dot(a)
+print(c)
