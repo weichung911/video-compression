@@ -41,9 +41,9 @@ def Ycbcr444toYcbcr420_file(img_ycbcr):
     # Downsample cb and cr (apply 420 format)
     cb = Downsample(cb)
     cr = Downsample(cr)
-    cv.imshow('Y',Y)
-    cv.imshow('cb',cb)
-    cv.imshow('cr',cr)
+    # cv.imshow('Y',Y)
+    # cv.imshow('cb',cb)
+    # cv.imshow('cr',cr)
     # Open In-memory bytes streams (instead of using fifo)
     f = io.BytesIO()
     # Write Y, U and V to the "streams".
@@ -51,7 +51,7 @@ def Ycbcr444toYcbcr420_file(img_ycbcr):
     f.write(cb.tobytes())
     f.write(cr.tobytes())
     f.seek(0)
-    return f ,Y.shape
+    return Y, cb, cr, f, Y.shape
 
 def Ycbcr420_file2img(f,Y_shape):
     f.seek(0)
