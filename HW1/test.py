@@ -37,10 +37,24 @@ def rgb2ycbcr(img):
 # for i in range(0,10,2):
 #     print(i)
 
-a = np.array([[1,2,3],
-              [1,1,1],
-              [1,1,1]])
-b = np.array([1,2,3])
+# a = np.array([[1,2,3],
+#               [1,1,1],
+#               [1,1,1]])
+# b = np.array([1,2,3])
 
-c = b.dot(a)
-print(c)
+# c = b.dot(a)
+# print(c)
+
+# f = io.BytesIO()
+# f1 = io.BytesIO()
+# f.write(b'123')
+# f.seek(0)
+# f1.write(f.read())
+# f1.write(b'345')
+# print(f.read())
+# f1.seek(0)
+# print(f1.read())
+
+file = open('test.yuv', 'wb')
+file.write(b'whatever')
+file.close()

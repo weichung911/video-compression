@@ -1,7 +1,5 @@
 import cv2 as cv
 import numpy as np
-import os
-import io
 from funtion import RGB2Ycbcr, Ycbcr444toYcbcr420_file, Ycbcr420_file2img ,Ycbcr2BGR
 
 
@@ -16,6 +14,6 @@ cv.imshow('Y',f_0_Y)
 cv.imshow('cb',f_0_cb)
 cv.imshow('cr',f_0_cr)
 cv.imshow('Ycbcr420',foreman_qcif_0_Ycbcr420)
-cv.imshow('bgr',f_0_bgr)
+cv.imshow('after_compression',f_0_bgr)
 cv.waitKey(0)
  
