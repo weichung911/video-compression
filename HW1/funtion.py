@@ -84,4 +84,8 @@ def Ycbcr2BGR(img_Ycbcr):
 
     return img_BGR
 
+def intensities_evenly_Ycbcr(img_Ycbcr):
+    (Y,cb,cr) = cv.split(img_Ycbcr)
+
+    
 
