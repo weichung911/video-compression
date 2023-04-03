@@ -2,6 +2,8 @@ import cv2 as cv
 import numpy as np
 import os
 import io
+import matplotlib.pyplot as PLT
+from tabulate import tabulate
 
 def RGB2Ycbcr(img_rgb):
     filter = np.array([[0.183,0.614,0.062],
@@ -84,8 +86,26 @@ def Ycbcr2BGR(img_Ycbcr):
 
     return img_BGR
 
-def intensities_evenly_Ycbcr(img_Ycbcr):
-    (Y,cb,cr) = cv.split(img_Ycbcr)
+def build_table(li=[]):
+    table = np.zeros([8])
+    for i, img in enumerate(li):
+        for c in range(3):
+            hist = cv.calcHist([img],[c],None,[8],[0, 8])
+            table = np.sum([hist.flatten(),table],axis=0).tolist()
+    sum_t = sum(table)
+    probability = [item/sum_t for item in table]
+    print(probability)
+    
+    info = {
+        'code':[],
+        'sym':[0,1,2,3,4,5,6,7],
+        'probability':probability
+    }
+    print(tabulate(info, headers='keys'))
+
+
+
+
 
     
 
