@@ -58,11 +58,25 @@ import math
 # file = open('test.yuv', 'wb')
 # file.write(b'whatever')
 # file.close()
-a = np.array([[10,11,12],[13,14,15]])
-a = (a/3).astype(np.uint8)
-# a = a.astype(np.uint8)
-l1 = [1,2,3]
-l2 = [5,5,6]
-print(l1+l2)
-l3 = np.sum([l1,l2],axis=0).tolist()
-print(l3)
+# a = np.array([[10,11,12],[13,14,15]])
+# a = (a/3).astype(np.uint8)
+# # a = a.astype(np.uint8)
+# l1 = [1,2,3]
+# l2 = [5,5,6]
+# print(l1+l2)
+# l3 = np.sum([l1,l2],axis=0).tolist()
+# print(l3)
+
+# a = np.array([[[1,1,1],
+#                [1,1,1],
+#                [1,1,1]],
+#                [[2,2,2],
+#                 [2,2,2],
+#                 [2,2,2]],
+#                [[3,3,3],
+#                 [3,3,3],
+#                 [3,3,3]]])
+# print(a.flatten())
+a='123'
+a = np.fromstring(a, np.int8) - 48
+print(a)

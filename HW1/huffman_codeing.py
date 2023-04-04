@@ -45,3 +45,22 @@ def build_huffman_table(node, code="", huff_table={}):
     build_huffman_table(node.left, code + "0", huff_table)
     build_huffman_table(node.right, code + "1", huff_table)
     return huff_table
+
+def encode(text, huff_table):
+    encoded_text = ''
+    for char in text:
+        encoded_text += huff_table[int(char)]
+    return encoded_text
+
+def decode(encoded_text, node):
+    decoded_text = ""
+    current_node = node
+    for bit in encoded_text:
+        if bit == "0":
+            current_node = current_node.left
+        else:
+            current_node = current_node.right
+        if current_node.sym is not None:
+            decoded_text += str(current_node.sym)
+            current_node = node
+    return decoded_text

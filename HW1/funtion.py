@@ -4,7 +4,7 @@ import os
 import io
 import matplotlib.pyplot as PLT
 from tabulate import tabulate
-from huffman_codeing import build_huffman_tree, build_huffman_table
+from huffman_codeing import build_huffman_tree, build_huffman_table, encode, decode
 
 def RGB2Ycbcr(img_rgb):
     filter = np.array([[0.183,0.614,0.062],
@@ -108,6 +108,12 @@ def build_table(li=[]):
     }
     print(tabulate(info, headers='keys'))
     return info, code, root
+
+def huffman_encode(text, huff_table):
+    return encode(text, huff_table)
+
+def huffman_decode(encoded_text, node):
+    return decode(encoded_text, node)
 
 
 
