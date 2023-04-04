@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-from funtion import RGB2Ycbcr, Ycbcr444toYcbcr420_file, Ycbcr420_file2img, Ycbcr2BGR, build_table,huffman_encode,huffman_decode
+from funtion import  Ycbcr420_file2img, Ycbcr2BGR, build_table,huffman_encode,huffman_decode
 import io
 
 frame_rgb = []
@@ -17,8 +17,6 @@ for i in range(3):
     frame_ycbcr.append(Ycbcr420_file2img(tmp_f,(height,width)))
     tmp_f.seek(0)
     tmp_f.truncate(0)
-    # frame_rgb.append(cv.imread("foreman_qcif_"+ str(i) +"_rgb.bmp"))
-    # frame_ycbcr.append(RGB2Ycbcr(frame_rgb[i]))
     frame_ycbcr[i] = (frame_ycbcr[i]/32).astype(np.uint8)
 
 info, code, root = build_table(frame_ycbcr)
