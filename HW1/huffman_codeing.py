@@ -18,7 +18,6 @@ def build_huffman_tree(symbol,probability):
     for num in symbol:
         freqs[num] += probability[num]
 
-    print(freqs)
 
     # 創建所有節點
     nodes = [Node(sym, freq) for sym, freq in freqs.items()]

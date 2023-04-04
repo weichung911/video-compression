@@ -1,8 +1,6 @@
 import cv2 as cv
 import numpy as np
-import os
 import io
-import matplotlib.pyplot as PLT
 from tabulate import tabulate
 from huffman_codeing import build_huffman_tree, build_huffman_table, encode, decode
 
