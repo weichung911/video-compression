@@ -4,6 +4,7 @@ import os
 import io
 import matplotlib.pyplot as PLT
 from tabulate import tabulate
+from huffman_codeing import build_huffman_tree, build_huffman_table
 
 def RGB2Ycbcr(img_rgb):
     filter = np.array([[0.183,0.614,0.062],
@@ -86,6 +87,7 @@ def Ycbcr2BGR(img_Ycbcr):
 
     return img_BGR
 
+
 def build_table(li=[]):
     table = np.zeros([8])
     for i, img in enumerate(li):
@@ -95,13 +97,17 @@ def build_table(li=[]):
     sum_t = sum(table)
     probability = [item/sum_t for item in table]
     print(probability)
-    
+    sym = [0,1,2,3,4,5,6,7]
+    root = build_huffman_tree(sym,probability)
+    code = build_huffman_table(root)
+    code_tabulate = [code.get(i) for i in sym]
     info = {
-        'code':[],
-        'sym':[0,1,2,3,4,5,6,7],
+        'code':code_tabulate,
+        'symbol':sym,
         'probability':probability
     }
     print(tabulate(info, headers='keys'))
+    return info, code, root
 
 
 

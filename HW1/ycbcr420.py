@@ -1,26 +1,77 @@
-import numpy as np
-from scipy import signal
+import heapq
+from collections import defaultdict
 
-# 定义RGB到YCbCr的转换矩阵
-RGB2YCbCr = np.array([[0.299, 0.587, 0.114],
-                      [-0.169, -0.331, 0.5],
-                      [0.5, -0.419, -0.081]])
+class Node:
+    def __init__(self, char, freq):
+        self.char = char
+        self.freq = freq
+        self.left = None
+        self.right = None
+    
+    def __lt__(self, other):
+        return self.freq < other.freq
 
-def rgb2ycbcr(img):
-    # 将图像数据类型转换为浮点型，并归一化到0-1之间
-    img = img.astype(np.float) / 255.
+def build_huffman_tree(text):
+    # 計算字符頻率
+    freqs = defaultdict(int)
+    for char in text:
+        freqs[char] += 1
 
-    # 对RGB图像进行矩阵乘法运算，得到YCbCr图像
-    ycbcr = np.dot(img, RGB2YCbCr.T)
+    print(freqs)
 
-    # 对Cb和Cr分量进行4:2:0采样
-    Cb = signal.convolve2d(ycbcr[:, :, 1], np.ones((2, 2)), mode='valid')[::2, ::2]
-    Cr = signal.convolve2d(ycbcr[:, :, 2], np.ones((2, 2)), mode='valid')[::2, ::2]
+    # 創建所有節點
+    nodes = [Node(char, freq) for char, freq in freqs.items()]
 
-    # 将Y、Cb和Cr分量合并为YCbCr 4:2:0格式的图像
-    ycbcr420 = np.zeros((img.shape[0] // 2, img.shape[1] // 2, 3))
-    ycbcr420[:, :, 0] = ycbcr[::2, ::2, 0]
-    ycbcr420[:, :, 1] = Cb
-    ycbcr420[:, :, 2] = Cr
 
-    return ycbcr420
+    # 將節點加入優先隊列中
+    heapq.heapify(nodes)
+
+    # 合併節點，直到只剩下一個節點
+    while len(nodes) > 1:
+        left = heapq.heappop(nodes)
+        right = heapq.heappop(nodes)
+        new_node = Node(None, left.freq + right.freq)
+        new_node.left = left
+        new_node.right = right
+        heapq.heappush(nodes, new_node)
+
+    return nodes[0]
+
+def build_huffman_table(node, code="", huff_table={}):
+    if node is None:
+        return
+    if node.char is not None:
+        huff_table[node.char] = code
+    build_huffman_table(node.left, code + "0", huff_table)
+    build_huffman_table(node.right, code + "1", huff_table)
+    return huff_table
+
+def encode(text, huff_table):
+    encoded_text = ""
+    for char in text:
+        encoded_text += huff_table[char]
+    return encoded_text
+
+def decode(encoded_text, node):
+    decoded_text = ""
+    current_node = node
+    for bit in encoded_text:
+        if bit == "0":
+            current_node = current_node.left
+        else:
+            current_node = current_node.right
+        if current_node.char is not None:
+            decoded_text += current_node.char
+            current_node = node
+    return decoded_text
+
+# 使用示例
+text = "hello world"
+root = build_huffman_tree(text)
+huff_table = build_huffman_table(root)
+print(huff_table)
+encoded_text = encode(text, huff_table)
+decoded_text = decode(encoded_text, root)
+print("Encoded text:", encoded_text)
+print("Decoded text:", decoded_text)
+
