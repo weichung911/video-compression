@@ -1,6 +1,5 @@
 import cv2 as cv
 from function import *
-from PIL import Image
 
 ref_frame = cv.imread('foreman_qcif_0_rgb.bmp')
 current_frame = cv.imread('foreman_qcif_1_rgb.bmp')
@@ -17,7 +16,7 @@ num_blocks_y = height // block_size
 print(num_blocks_x,num_blocks_y)
 idx = 0
 MVs = []
-
+# (a)
 for i in range(num_blocks_y):
     for j in range(num_blocks_x):
         x = j * block_size
@@ -30,13 +29,15 @@ for i in range(num_blocks_y):
         mv = Full_search(block,search_area,block_point,search_point)
         MVs.append([idx,mv[0],mv[1]])
         idx += 1
-print("--------------------------")
+print("------------MV.txt------------")
 for i in MVs:
-    print(i)
+    print('Block '+str(i[0])+' - ('+str(i[1])+','+str(i[2])+')')
+print("------------------------------")
 with open('MV.txt','w') as f:
     for mv in MVs:
         f.writelines('Block '+str(mv[0])+' - ('+str(mv[1])+','+str(mv[2])+')\n')
-print(height,width)
+
+# (b)
 collage = np.zeros((height,width))
 
 count_b = 0
@@ -48,10 +49,9 @@ for i in range(num_blocks_y):
         ref_y = y + MVs[count_b][2]
         
         match_block = ref_frame_y[ref_y:ref_y+block_size, ref_x:ref_x+block_size]
-        roi = collage[y:y+block_size, x:x+block_size]
         collage[y:y+block_size, x:x+block_size] = match_block
         # np.copyto(roi,match_block)
         count_b +=1
-collage = cv.resize(collage,(width*2,height*2))
+# collage = cv.resize(collage,(width*2,height*2))
 cv.imshow("collage", collage.astype(np.uint8))
 cv.waitKey(0)
