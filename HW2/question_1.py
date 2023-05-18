@@ -55,3 +55,4 @@ for i in range(num_blocks_y):
 # collage = cv.resize(collage,(width*2,height*2))
 cv.imshow("collage", collage.astype(np.uint8))
 cv.waitKey(0)
+cv.imwrite("q1_collage.png", collage)

@@ -46,15 +46,13 @@ for i in range(num_blocks_y):
         y = i * block_size
         padded_img = zero_padding(current_frame_Y,1)
         match_block = padded_img[y:y+block_size+1, x:x+block_size+1]
-        print(q2_MV[count_b])
         if q2_MV[count_b][1] != -1:
-            print(q2_MV[count_b])
             collage[y:y+block_size, x:x+block_size] = intra_prediction(match_block,q2_MV[count_b][1])
         # np.copyto(roi,match_block)
         count_b +=1
 
 cv.imshow("collage", collage.astype(np.uint8))
-
+cv.imwrite("q2_collage.png", collage)
 cv.waitKey(0)
 
 
